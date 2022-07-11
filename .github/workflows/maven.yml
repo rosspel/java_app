@@ -59,6 +59,7 @@ jobs:
             ${{ runner.os }}-buildx-
 
     - name: Build & push Docker image
+      id: docker_build
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
          image: rossellap/java_app
@@ -67,3 +68,6 @@ jobs:
          dockerfile: Dockerfile
          username: ${{ secrets.DOCKERHUB_USERNAME }}
          password: ${{ secrets.DOCKERHUB_TOKEN }}
+         
+    - name: Image digest
+      run: echo ${{ steps.docker_build.outputs.digest }
